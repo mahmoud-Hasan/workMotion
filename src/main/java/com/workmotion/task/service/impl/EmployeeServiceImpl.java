@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.support.DefaultStateMachineContext;
 import org.springframework.stereotype.Service;
 
 import com.workmotion.task.model.EmployeeModel;
+import com.workmotion.task.exception.InvalidStateTransactionException;
+import com.workmotion.task.exception.WorkmotionErrors;
 import com.workmotion.task.model.EmployeeEventsEnum;
 import com.workmotion.task.model.EmployeeStatesEnum;
 import com.workmotion.task.repo.EmployeesRepo;
@@ -44,10 +47,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeModel updateEmpolyeeStates(Long employeId, EmployeeEventsEnum event) {
 		EmployeeModel employeeModel = getEmployeeById(employeId);
+		EmployeeStatesEnum state= employeeModel.getState();
+		stateMachine
+			.getStateMachineAccessor()
+			.doWithAllRegions(access -> {
+				access.resetStateMachine(new DefaultStateMachineContext<>(state, null, null, null, null));
+        });	
 		stateMachine.start();
-		
 		if(!stateMachine.sendEvent(event))
-			throw new RuntimeException("invalid state transaction");
+			throw new InvalidStateTransactionException(WorkmotionErrors.INVALID_STATE_TRANSACTION);
 		
 		employeeModel.setState(stateMachine.getState().getId());
 		stateMachine.stop();

@@ -3,7 +3,6 @@ package com.workmotion.task.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -42,10 +41,8 @@ public class EmployeeController {
 	
 	@PatchMapping("/update/{employeId}/state/{event}")
 	public ResponseEntity<?> createEmployee(@PathVariable Long employeId ,@PathVariable EmployeeEventsEnum event ){
-		try {
+		
 			return ResponseEntity.ok(employeeService.updateEmpolyeeStates(employeId, event));
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
+
 	}
 }

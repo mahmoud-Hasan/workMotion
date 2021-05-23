@@ -14,8 +14,11 @@ import org.springframework.statemachine.state.State;
 import com.workmotion.task.model.EmployeeEventsEnum;
 import com.workmotion.task.model.EmployeeStatesEnum;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
 @EnableStateMachine
+@Slf4j
 public class StateConfig extends StateMachineConfigurerAdapter<EmployeeStatesEnum, EmployeeEventsEnum> {
 
     @Override
@@ -51,7 +54,7 @@ public class StateConfig extends StateMachineConfigurerAdapter<EmployeeStatesEnu
 	   StateMachineListenerAdapter<EmployeeStatesEnum, EmployeeEventsEnum> stateAdapter = new StateMachineListenerAdapter<>() {
 		   public void stateChanged(State<EmployeeStatesEnum, EmployeeEventsEnum> from,
 				   State<EmployeeStatesEnum, EmployeeEventsEnum> to) {
-			   System.out.println("state changed");
+			   			log.info("state changed : " + from + " -> "+ to.getId());
 		   };
 	   };
 	   config.withConfiguration().listener(stateAdapter);
