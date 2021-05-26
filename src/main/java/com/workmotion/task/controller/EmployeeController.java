@@ -2,6 +2,8 @@ package com.workmotion.task.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,26 +25,26 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 
-	@GetMapping("/get/all")
-	public ResponseEntity<List<EmployeeModel>> getAllEmployees() {
-		return ResponseEntity.ok(employeeService.getAllEmployees());
+	@GetMapping("/get")
+	public ResponseEntity<List<EmployeeModel>> getAll() {
+		return ResponseEntity.ok(employeeService.getAll());
 	}
 	
-	@GetMapping("/get/{employeId}")
-	public ResponseEntity<EmployeeModel> getEmplyeeById(@PathVariable Long employeId ) {
-		return ResponseEntity.ok(employeeService.getEmployeeById(employeId));
+	@GetMapping("/get/{id}")
+	public ResponseEntity<EmployeeModel> getById(@PathVariable Long id ) {
+		return ResponseEntity.ok(employeeService.getById(id));
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<EmployeeModel> createEmployee(@RequestBody EmployeeModel employeeModel){
+	public ResponseEntity<EmployeeModel> create(@RequestBody @Valid EmployeeModel employeeModel){
 		
-		return ResponseEntity.ok(employeeService.createEmployee(employeeModel));
+		return ResponseEntity.ok(employeeService.create(employeeModel));
 	}
 	
-	@PatchMapping("/update/{employeId}/state/{event}")
-	public ResponseEntity<?> createEmployee(@PathVariable Long employeId ,@PathVariable EmployeeEventsEnum event ){
+	@PatchMapping("/updatestate/{id}/state/{event}")
+	public ResponseEntity<EmployeeModel> updateState(@PathVariable Long id ,@PathVariable EmployeeEventsEnum event ){
 		
-			return ResponseEntity.ok(employeeService.updateEmpolyeeStates(employeId, event));
+			return ResponseEntity.ok(employeeService.updateState(id, event));
 
 	}
 }

@@ -23,7 +23,7 @@ public class EmployeeServiceRealTest {
 									.age(30).firstName("firstName")
 									.lastName("lastName").state(EmployeeStatesEnum.ACTIVE)
 									.build();
-		employeeModel =employeeService.createEmployee(employeeModel);
+		employeeModel =employeeService.create(employeeModel);
 		assertEquals(employeeModel.getState(), EmployeeStatesEnum.ADDED);
 	}
 }

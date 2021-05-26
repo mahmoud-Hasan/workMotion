@@ -17,7 +17,7 @@ import com.workmotion.task.exception.InvalidStateTransactionException;
 import com.workmotion.task.model.EmployeeEventsEnum;
 import com.workmotion.task.model.EmployeeModel;
 import com.workmotion.task.model.EmployeeStatesEnum;
-import com.workmotion.task.repo.EmployeesRepo;
+import com.workmotion.task.repository.EmployeesRepository;
 import com.workmotion.task.service.impl.EmployeeServiceImpl;
 
 @SpringBootTest
@@ -25,7 +25,7 @@ import com.workmotion.task.service.impl.EmployeeServiceImpl;
 public class EmployeeServiceMockTest {
 
 	@Mock
-	private EmployeesRepo employeesRepo;
+	private EmployeesRepository employeesRepo;
 	
 	@InjectMocks
 	@Autowired
@@ -42,7 +42,7 @@ public class EmployeeServiceMockTest {
 				.build();
 		when(employeesRepo.findById(1001L)).thenReturn(Optional.of(employeeModel));
 		assertThrows( InvalidStateTransactionException.class , ()->{
-			employeeServiceImpl.updateEmpolyeeStates(1001L, EmployeeEventsEnum.ACTIVATE);
+			employeeServiceImpl.updateState(1001L, EmployeeEventsEnum.ACTIVATE);
 			}
 		);
 	    

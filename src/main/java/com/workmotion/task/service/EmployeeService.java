@@ -7,12 +7,12 @@ import com.workmotion.task.model.EmployeeModel;
 
 public interface EmployeeService {
 
-	public EmployeeModel createEmployee(EmployeeModel employeeModel);
+	public EmployeeModel create(EmployeeModel employeeModel);
 	
-	public EmployeeModel updateEmpolyeeStates(Long employeId, EmployeeEventsEnum event);
+	public EmployeeModel updateState(Long id, EmployeeEventsEnum event);
 	
-	public EmployeeModel getEmployeeById(Long id);
+	public EmployeeModel getById(Long id);
 	
-	public List<EmployeeModel> getAllEmployees();
+	public List<EmployeeModel> getAll();
 	
 }
