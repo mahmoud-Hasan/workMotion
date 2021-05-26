@@ -16,7 +16,7 @@ To successfully run this Spring Boot Application:
 ### Run using STS
 
 1. Import the project as Maven Project
-2. From the Tools tap select " Run -> Run As -> Maven clean " , Then repeat it with " Maven Install " , Finally run the project " Run -> Run As -> Spring Boot App "
+2. From the Tools tap select `Run -> Run As -> Maven clean` , Then repeat it with `Maven Install` , Finally run the project `Run -> Run As -> Spring Boot App `
 
 ## Requirements
 
